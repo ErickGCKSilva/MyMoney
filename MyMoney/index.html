@@ -57,7 +57,30 @@
 </section>
 
 <section id="listagem">
-    <section id="listagem">
+
+    <p>
+        <label for="pesquisa">Pesquisar</label>
+        <input type="search" id="pesquisa" name="pesquisa">
+    </p>
+
+    <p>
+    <label for="filtro-categoria">Filtrar por categoria</label>
+    <select id="filtro-categoria" name="filtro-categoria">
+        <option value="todas">Todas</option>
+        <option value="alimentacao">Alimentação</option>
+        <option value="lazer">Lazer</option>
+        <option value="saude">Saúde</option>
+        <option value="transporte">Transporte</option>
+    </select>
+    </p>
+
+    <p>
+        <label for="ordenacao">Ordenar por</label>
+        <select id="ordenacao" name="ordenacao">
+            <option value="data">Data</option>
+            <option value="valor">Valor</option>
+    </select>
+    </p>
 
     <table>
         <thead>
@@ -94,7 +117,6 @@
         </tbody>
     </table>
 
-</section>
 </section>
 
 </main>
