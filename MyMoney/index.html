@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang = "pt-BR">
+<html lang="pt-BR">
 <head>
-    <meta charset = "UTF-8">
+    <meta charset="UTF-8">
     <title>MyMoney</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
@@ -10,36 +10,45 @@
     <h1>MyMoney</h1>
 
     <nav>
-    <a href = "#cadastro">Cadastro de Despesas</a>
-    <a href = "#listagem">Minhas Despesas</a>
+        <a href="#cadastro">Cadastro de Despesas</a>
+        <a href="#listagem">Minhas Despesas</a>
     </nav>
 </header>
 <main>
-<section id = "cadastro">
+<section id="cadastro">
     <form>
 
-        <label for ="descricao">Descrição</label>
-        <input type ="text" id ="descricao" name = "descricao">
+        <p>
+            <label for="descricao">Descrição</label>
+            <input type="text" id="descricao" name="descricao">
+        </p>
 
-        <label for ="valor">Valor</label>
-        <input type ="number" id="valor" name = "valor">
+        <p>
+            <label for="valor">Valor</label>
+            <input type="number" id="valor" name="valor">
+        </p>
 
-        <label for ="data">Data</label>
-        <input type ="date" id="data" name = "data">
+        <p>
+            <label for="data">Data</label>
+            <input type="date" id="data" name="data">
+        </p>
 
-        <label for ="categoria">Categoria</label>
-        <select id="categoria" name = "categoria">
-            <option value = "alimentacao">Alimentação</option>
-            <option value = "lazer">Lazer</option>
-            <option value = "saude">Saúde</option>
-            <option value = "transporte">Transporte</option>
-        </select>
-    </form>
-</section>
+        <p>
+            <label for="categoria">Categoria</label>
+            <select id="categoria" name="categoria">
+                <option value="alimentacao">Alimentação</option>
+                <option value="lazer">Lazer</option>
+                <option value="saude">Saúde</option>
+                <option value="transporte">Transporte</option>
+            </select>
+        </p>
 
-<section id = "listagem">
-</section>
+        <p>
+            <label for="status">Status</label>
+            <select id="status" name="status">
+                <option value="Pago">Pago</option>
+                <option value="Não Pago">Não Pago</option>
+            </select>
+        </p>
 
-</main>
-</body>
-</html>
+        <button type="submit">Cadastrar</button>
