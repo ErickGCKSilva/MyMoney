@@ -106,3 +106,24 @@ button {
     font-family: inherit;
 }
 
+@media (max-width: 600px) {
+    header {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    nav {
+        margin-left: 0;
+        flex-wrap: wrap;
+    }
+
+    input,
+    select {
+        width: 100%;
+    }
+
+    table {
+        display: block;
+        overflow-x: auto;
+    }
+}
