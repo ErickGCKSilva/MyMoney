@@ -6,155 +6,152 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-<header>
-    <h1>MyMoney</h1>
+    <header>
+        <h1>MyMoney</h1>
 
-    <nav>
-        <a href="#cadastro">Cadastro de Despesas</a>
-        <a href="#listagem">Minhas Despesas</a>
-        <a href="#detalhes">Detalhes</a>
+        <nav>
+            <a href="#cadastro">Cadastro de Despesas</a>
+            <a href="#listagem">Minhas Despesas</a>
+            <a href="#detalhes">Detalhes</a>
+        </nav>
+    </header>
 
-    </nav>
-</header>
-<main>
-<section id="cadastro">
-    <h2>Cadastro de despesa</h2>
-    <form>
+    <main>
+        <section id="cadastro">
+            <h2>Cadastro de despesa</h2>
 
-        <p>
-            <label for="descricao">Descrição</label>
-            <input type="text" id="descricao" name="descricao">
-        </p>
+            <form>
+                <p>
+                    <label for="descricao">Descrição</label>
+                    <input type="text" id="descricao" name="descricao">
+                </p>
 
-        <p>
-            <label for="valor">Valor</label>
-            <input type="number" id="valor" name="valor" step="0.01">
-        </p>
+                <p>
+                    <label for="valor">Valor</label>
+                    <input type="number" id="valor" name="valor" step="0.01">
+                </p>
 
-        <p>
-            <label for="data">Data</label>
-            <input type="date" id="data" name="data">
-        </p>
+                <p>
+                    <label for="data">Data</label>
+                    <input type="date" id="data" name="data">
+                </p>
 
-        <p>
-            <label for="categoria">Categoria</label>
-            <select id="categoria" name="categoria">
-                <option value="alimentacao">Alimentação</option>
-                <option value="lazer">Lazer</option>
-                <option value="saude">Saúde</option>
-                <option value="transporte">Transporte</option>
-                <option value="moradia">Moradia</option>
-            </select>
-        </p>
+                <p>
+                    <label for="categoria">Categoria</label>
+                    <select id="categoria" name="categoria">
+                        <option value="alimentacao">Alimentação</option>
+                        <option value="lazer">Lazer</option>
+                        <option value="saude">Saúde</option>
+                        <option value="transporte">Transporte</option>
+                        <option value="moradia">Moradia</option>
+                    </select>
+                </p>
 
-        <p>
-            <label for="status">Status</label>
-            <select id="status" name="status">
-                <option value="Pago">Pago</option>
-                <option value="Pendente">Pendente</option>
-            </select>
-        </p>
+                <p>
+                    <label for="status">Status</label>
+                    <select id="status" name="status">
+                        <option value="Pago">Pago</option>
+                        <option value="Pendente">Pendente</option>
+                    </select>
+                </p>
 
-        <button type="submit">Cadastrar</button>
+                <button type="submit">Cadastrar</button>
+            </form>
+        </section>
 
-    </form>
-</section>
+        <section id="listagem">
+            <h2>Minhas despesas</h2>
 
-<section id="listagem">
-    <h2>Minhas despesas</h2>
-    <p>
-        <label for="pesquisa">Pesquisar</label>
-        <input type="search" id="pesquisa" name="pesquisa">
-    </p>
+            <p>
+                <label for="pesquisa">Pesquisar</label>
+                <input type="search" id="pesquisa" name="pesquisa">
+            </p>
 
-    <p>
-    <label for="filtro-categoria">Filtrar por categoria</label>
-    <select id="filtro-categoria" name="filtro-categoria">
-        <option value="todas">Todas</option>
-        <option value="alimentacao">Alimentação</option>
-        <option value="lazer">Lazer</option>
-        <option value="saude">Saúde</option>
-        <option value="transporte">Transporte</option>
-        <option value="moradia">Moradia</option>
-    </select>
-    </p>
+            <p>
+                <label for="filtro-categoria">Filtrar por categoria</label>
+                <select id="filtro-categoria" name="filtro-categoria">
+                    <option value="todas">Todas</option>
+                    <option value="alimentacao">Alimentação</option>
+                    <option value="lazer">Lazer</option>
+                    <option value="saude">Saúde</option>
+                    <option value="transporte">Transporte</option>
+                    <option value="moradia">Moradia</option>
+                </select>
+            </p>
 
-    <p>
-        <label for="ordenacao">Ordenar por</label>
-        <select id="ordenacao" name="ordenacao">
-            <option value="data">Data</option>
-            <option value="valor">Valor</option>
-    </select>
-    </p>
+            <p>
+                <label for="ordenacao">Ordenar por</label>
+                <select id="ordenacao" name="ordenacao">
+                    <option value="data">Data</option>
+                    <option value="valor">Valor</option>
+                </select>
+            </p>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Descrição</th>
-                <th>Valor</th>
-                <th>Data</th>
-                <th>Categoria</th>
-                <th>Status</th>
-                <th>Ação</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Supermercado</td>
-                <td>R$ 250,00</td>
-                <td>01/10/2026</td>
-                <td>Alimentação</td>
-                <td>Pago</td>
-                <td>
-                    <button type="button">Editar</button>
-                    <button type="button">Excluir</button>
-                    <button type="button">Ver detalhes</button>
-                </td>
-            </tr>
-            <tr>
-                <td>Conta de luz</td>
-                <td>R$ 180,00</td>
-                <td>05/10/2026</td>
-                <td>Moradia</td>
-                <td>Pendente</td>
-                <td>
-                    <button type="button">Editar</button>
-                    <button type="button">Excluir</button>
-                    <button type="button">Ver detalhes</button>
-                </td>
-            </tr>
-            <tr>
-                <td>Uber</td>
-                <td>R$ 35,00</td>
-                <td>07/10/2026</td>
-                <td>Transporte</td>
-                <td>Pago</td>
-                <td>
-                    <button type="button">Editar</button>
-                    <button type="button">Excluir</button>
-                    <button type="button">Ver detalhes</button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Descrição</th>
+                        <th>Valor</th>
+                        <th>Data</th>
+                        <th>Categoria</th>
+                        <th>Status</th>
+                        <th>Ação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Supermercado</td>
+                        <td>R$ 250,00</td>
+                        <td>01/10/2026</td>
+                        <td>Alimentação</td>
+                        <td>Pago</td>
+                        <td>
+                            <button type="button">Editar</button>
+                            <button type="button">Excluir</button>
+                            <button type="button">Ver detalhes</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Conta de luz</td>
+                        <td>R$ 180,00</td>
+                        <td>05/10/2026</td>
+                        <td>Moradia</td>
+                        <td>Pendente</td>
+                        <td>
+                            <button type="button">Editar</button>
+                            <button type="button">Excluir</button>
+                            <button type="button">Ver detalhes</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Uber</td>
+                        <td>R$ 35,00</td>
+                        <td>07/10/2026</td>
+                        <td>Transporte</td>
+                        <td>Pago</td>
+                        <td>
+                            <button type="button">Editar</button>
+                            <button type="button">Excluir</button>
+                            <button type="button">Ver detalhes</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
 
-</section>
+        <section id="detalhes">
+            <h2>Detalhes da Despesa</h2>
 
-<section id="detalhes">
+            <p><strong>Descrição:</strong> Supermercado</p>
+            <p><strong>Valor:</strong> R$ 250,00</p>
+            <p><strong>Data:</strong> 01/10/2026</p>
+            <p><strong>Categoria:</strong> Alimentação</p>
+            <p><strong>Status:</strong> Pago</p>
+        </section>
+    </main>
 
-    <h2>Detalhes da Despesa</h2>
-
-    <p><strong>Descrição:</strong> Supermercado</p>
-    <p><strong>Valor:</strong> R$ 250,00</p>
-    <p><strong>Data:</strong> 01/10/2026</p>
-    <p><strong>Categoria:</strong> Alimentação</p>
-    <p><strong>Status:</strong> Pago</p>
-
-</section>
-
-</main>
-<footer>
-    <p>MyMoney &copy; 2026</p>
-</footer>
+    <footer>
+        <p>MyMoney &copy; 2026</p>
+    </footer>
 </body>
 </html>
