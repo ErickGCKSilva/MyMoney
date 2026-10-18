@@ -118,6 +118,10 @@ form p {
     margin: 0;
 }
 
+form button {
+    justify-self: start;
+}
+
 @media (max-width: 600px) {
     header {
         flex-direction: column;
