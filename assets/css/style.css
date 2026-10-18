@@ -27,3 +27,12 @@ footer {
     background-color: gray;
     box-shadow: 0 2px 8px;
 }
+
+h1 {
+    margin: 0;
+}
+
+header img{
+    height: 48px;
+    width: auto;
+}
