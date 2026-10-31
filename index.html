@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <title>MyMoney</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
+
 <body>
     <header>
-        
+
 
         <h1><img src="assets/img/logo.png" alt="logo MyMoney"></h1>
 
@@ -90,56 +92,64 @@
                 </select>
             </p>
 
-            <table>
-                <thead>
-                    <tr>
-                        <th>Descrição</th>
-                        <th>Valor</th>
-                        <th>Data</th>
-                        <th>Categoria</th>
-                        <th>Status</th>
-                        <th>Ação</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Supermercado</td>
-                        <td>R$ 250,00</td>
-                        <td>01/10/2026</td>
-                        <td>Alimentação</td>
-                        <td>Pago</td>
-                        <td>
-                            <button type="button" class="btn-editar">Editar</button>
-                            <button type="button" class="btn-excluir">Excluir</button>
-                            <button type="button" class="btn-detalhes">Ver detalhes</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Conta de luz</td>
-                        <td>R$ 180,00</td>
-                        <td>05/10/2026</td>
-                        <td>Moradia</td>
-                        <td>Pendente</td>
-                        <td>
-                            <button type="button" class="btn-editar">Editar</button>
-                            <button type="button" class="btn-excluir">Excluir</button>
-                            <button type="button" class="btn-detalhes">Ver detalhes</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Uber</td>
-                        <td>R$ 35,00</td>
-                        <td>07/10/2026</td>
-                        <td>Transporte</td>
-                        <td>Pago</td>
-                        <td>
-                            <button type="button" class="btn-editar">Editar</button>
-                            <button type="button" class="btn-excluir">Excluir</button>
-                            <button type="button" class="btn-detalhes">Ver detalhes</button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="tabela-rolagem">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Descrição</th>
+                            <th>Valor</th>
+                            <th>Data</th>
+                            <th>Categoria</th>
+                            <th>Status</th>
+                            <th>Ação</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Supermercado</td>
+                            <td>R$ 250,00</td>
+                            <td>01/10/2026</td>
+                            <td>Alimentação</td>
+                            <td>Pago</td>
+                            <td>
+                                <div class="acoes">
+                                    <button type="button" class="btn-editar">Editar</button>
+                                    <button type="button" class="btn-excluir">Excluir</button>
+                                    <button type="button" class="btn-detalhes">Ver detalhes</button>
+                                </div>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Conta de luz</td>
+                            <td>R$ 180,00</td>
+                            <td>05/10/2026</td>
+                            <td>Moradia</td>
+                            <td>Pendente</td>
+                            <td>
+                                <div class="acoes">
+                                    <button type="button" class="btn-editar">Editar</button>
+                                    <button type="button" class="btn-excluir">Excluir</button>
+                                    <button type="button" class="btn-detalhes">Ver detalhes</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Uber</td>
+                            <td>R$ 35,00</td>
+                            <td>07/10/2026</td>
+                            <td>Transporte</td>
+                            <td>Pago</td>
+                            <td>
+                                <div class="acoes">
+                                    <button type="button" class="btn-editar">Editar</button>
+                                    <button type="button" class="btn-excluir">Excluir</button>
+                                    <button type="button" class="btn-detalhes">Ver detalhes</button>
+                                </div>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </section>
 
         <section id="detalhes">
@@ -157,4 +167,5 @@
         <p>MyMoney &copy; 2026</p>
     </footer>
 </body>
+
 </html>
