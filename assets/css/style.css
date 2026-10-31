@@ -56,14 +56,10 @@ p {
 
 a:hover,
 a:focus {
-    
-    color: inherit;
-    font-size: 25px;
     color: white;
 }
 
 a {
-    color: inherit;
     font-size: 20px;
     color: lightgreen;
 }
@@ -80,7 +76,6 @@ section {
 
 nav{
     display: flex;
-    align-items: right;
     gap: 24px;
 }
 
