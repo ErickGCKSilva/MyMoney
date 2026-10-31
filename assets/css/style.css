@@ -156,6 +156,26 @@ button:active {
     transform: translateY(1px);
 }
 
+.acoes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.btn-editar {
+    border-color: #22c55e;
+}
+
+.btn-excluir {
+    border-color: #ef4444;
+    color: #fca5a5;
+}
+
+.btn-excluir:hover {
+    background-color: #7f1d1d;
+    border-color: #ef4444;
+}
+
 @media (max-width: 600px) {
     header {
         flex-direction: column;
