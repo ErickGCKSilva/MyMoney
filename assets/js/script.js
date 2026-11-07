@@ -1,3 +1,7 @@
+
+// nome da chave onde as despesas ficam guardadas no navegador
+const CHAVE = "mymoney:despesas";
+
 // as despesas que estavam escritas na tabela, agora como dados
 const despesasIniciais = [
     { id: 1, descricao: "Supermercado", valor: 250, data: "2026-10-01", categoria: "alimentacao", status: "Pago" },
@@ -23,6 +27,24 @@ function formatarData(data) {
     return `${dia}/${mes}/${ano}`;
 }
 
+// guarda a lista inteira no navegador
+function salvarDespesas() {
+    const texto = JSON.stringify(despesas);   // lista → texto
+    localStorage.setItem(CHAVE, texto);       // texto → navegador
+}
+
+// lê a lista do navegador
+function carregarDespesas() {
+    const salvo = localStorage.getItem(CHAVE);   // navegador → texto (ou null)
+
+    // nada salvo ainda (primeira visita): usa as despesas de exemplo
+    if (!salvo) {
+        return despesasIniciais;
+    }
+
+    return JSON.parse(salvo);                    // texto → lista
+}
+
 // cria um botão com as etiquetas da ação e do id
 function criarBotao(texto, acao, id, classe) {
     const botao = document.createElement("button");
@@ -39,7 +61,7 @@ function renderizar(lista) {
     const corpo = document.querySelector("#lista-despesas");
     corpo.textContent = "";
 
-    
+
     // se não tem nenhuma despesa, mostra um aviso no lugar da tabela
     if (lista.length === 0) {
         const linha = document.createElement("tr");      // cria uma linha
@@ -85,6 +107,7 @@ function renderizar(lista) {
     });
 }
 
-// por enquanto, a lista é só a inicial
-let despesas = despesasIniciais;
+// estado inicial: o que está salvo no navegador, ou as de exemplo
+let despesas = carregarDespesas();
+salvarDespesas();          // grava já na abertura, pra a chave existir
 renderizar(despesas);
