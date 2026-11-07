@@ -228,6 +228,10 @@ corpoTabela.addEventListener("click", event => {
     if (acao === "editar") {
         iniciarEdicao(id);
     }
+
+    if (acao === "detalhes") {
+        mostrarDetalhes(id);
+    }
 });
 
 // remove a despesa com esse id
@@ -297,3 +301,35 @@ botaoCancelar.addEventListener("click", () => {
     resetarFormulario();
     mensagemFormulario.textContent = "Edição cancelada.";
 });
+
+// mostra os dados de uma despesa na seção de detalhes
+function mostrarDetalhes(id) {
+    const despesa = despesas.find(despesa => despesa.id === id);
+    if (!despesa) {                     // não achou: não faz nada
+        return;
+    }
+
+    const area = document.querySelector("#detalhes-despesa");
+    area.textContent = "";              // apaga o conteúdo anterior
+
+    // cada item é um rótulo e um valor
+    const itens = [
+        ["Descrição", despesa.descricao],
+        ["Valor", formatoMoeda.format(despesa.valor)],
+        ["Data", formatarData(despesa.data)],
+        ["Categoria", nomesCategorias[despesa.categoria]],
+        ["Status", despesa.status]
+    ];
+
+    // cria um <p> com o rótulo em negrito pra cada item
+    itens.forEach(([rotulo, valor]) => {
+        const linha = document.createElement("p");
+        const negrito = document.createElement("strong");
+        negrito.textContent = `${rotulo}: `;
+        linha.append(negrito, valor);   // "Descrição: " + o valor
+        area.append(linha);
+    });
+
+    // rola a página até a seção de detalhes
+    document.querySelector("#detalhes").scrollIntoView({ behavior: "smooth" });
+}
