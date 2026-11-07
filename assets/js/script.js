@@ -200,5 +200,22 @@ corpoTabela.addEventListener("click", event => {
     const acao = botao.dataset.acao;            // o que o botão faz
     const id = Number(botao.dataset.id);        // de qual despesa (texto → número)
 
-    console.log("Ação:", acao, "Despesa:", id); // por enquanto, só mostra
+    if (acao === "excluir") {
+        excluirDespesa(id);
+    }
 });
+
+// remove a despesa com esse id
+function excluirDespesa(id) {
+    // acha a posição da despesa na lista (0, 1, 2...)
+    const indice = despesas.findIndex(despesa => despesa.id === id);
+
+    // -1 quer dizer que não achou: não faz nada
+    if (indice === -1) {
+        return;
+    }
+
+    despesas.splice(indice, 1);     // tira 1 item a partir dessa posição
+    salvarDespesas();               // grava a lista sem ela
+    renderizar(despesas);           // desenha a tabela de novo
+}
