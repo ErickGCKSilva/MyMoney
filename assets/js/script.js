@@ -183,3 +183,22 @@ formulario.addEventListener("submit", event => {
     formulario.reset();               // limpa os campos
     mensagemFormulario.textContent = "Despesa cadastrada com sucesso.";
 });
+
+// ===== AÇÕES DA TABELA (excluir, editar, detalhes) =====
+
+// um ouvinte só, no corpo da tabela, pra todos os botões
+const corpoTabela = document.querySelector("#lista-despesas");
+
+corpoTabela.addEventListener("click", event => {
+
+    // achou um botão com data-acao? se não, ignora o clique
+    const botao = event.target.closest("[data-acao]");
+    if (!botao) {
+        return;
+    }
+
+    const acao = botao.dataset.acao;            // o que o botão faz
+    const id = Number(botao.dataset.id);        // de qual despesa (texto → número)
+
+    console.log("Ação:", acao, "Despesa:", id); // por enquanto, só mostra
+});
