@@ -207,6 +207,13 @@ corpoTabela.addEventListener("click", event => {
 
 // remove a despesa com esse id
 function excluirDespesa(id) {
+
+    // pergunta antes; se a pessoa clicar em Cancelar, não exclui
+    const confirmou = window.confirm("Deseja excluir esta despesa?");
+    if (!confirmou) {
+        return;
+    }
+
     // acha a posição da despesa na lista (0, 1, 2...)
     const indice = despesas.findIndex(despesa => despesa.id === id);
 
