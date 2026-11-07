@@ -312,13 +312,25 @@ function mostrarDetalhes(id) {
     const area = document.querySelector("#detalhes-despesa");
     area.textContent = "";              // apaga o conteúdo anterior
 
+    // total de todas as despesas
+    const totalGeral = somarValores(despesas);
+
+    // quanto esta despesa representa do total, em porcentagem
+    const participacao = Math.round((despesa.valor / totalGeral) * 100);
+
+    // só as despesas da mesma categoria, e a soma delas
+    const mesmaCategoria = despesas.filter(item => item.categoria === despesa.categoria);
+    const totalCategoria = somarValores(mesmaCategoria);
+
     // cada item é um rótulo e um valor
     const itens = [
         ["Descrição", despesa.descricao],
         ["Valor", formatoMoeda.format(despesa.valor)],
         ["Data", formatarData(despesa.data)],
         ["Categoria", nomesCategorias[despesa.categoria]],
-        ["Status", despesa.status]
+        ["Status", despesa.status],
+        ["Participação no total", `${participacao}% de todos os gastos`],
+        [`Total em ${nomesCategorias[despesa.categoria]}`, formatoMoeda.format(totalCategoria)]
     ];
 
     // cria um <p> com o rótulo em negrito pra cada item
@@ -332,4 +344,13 @@ function mostrarDetalhes(id) {
 
     // rola a página até a seção de detalhes
     document.querySelector("#detalhes").scrollIntoView({ behavior: "smooth" });
+}
+
+// soma o valor de todas as despesas de uma lista
+function somarValores(lista) {
+    let total = 0;
+    lista.forEach(despesa => {
+        total = total + despesa.valor;
+    });
+    return total;
 }
