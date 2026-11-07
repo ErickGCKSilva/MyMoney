@@ -248,6 +248,12 @@ function excluirDespesa(id) {
     }
 
     despesas.splice(indice, 1);     // tira 1 item a partir dessa posição
+
+    // se a despesa excluída era a que estava sendo editada, sai da edição
+    if (id === idEmEdicao) {
+        resetarFormulario();
+    }
+
     salvarDespesas();               // grava a lista sem ela
     renderizar(despesas);           // desenha a tabela de novo
 }
@@ -285,3 +291,9 @@ function resetarFormulario() {
     botaoSalvar.textContent = "Cadastrar";
     botaoCancelar.hidden = true;                // esconde o cancelar
 }
+
+// cancelar: volta o formulário ao normal, sem mudar a despesa
+botaoCancelar.addEventListener("click", () => {
+    resetarFormulario();
+    mensagemFormulario.textContent = "Edição cancelada.";
+});
