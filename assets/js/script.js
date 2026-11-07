@@ -156,6 +156,7 @@ function validarDespesa(descricao, valor, data) {
 }
 
 // quando o formulário é enviado
+// quando o formulário é enviado
 formulario.addEventListener("submit", event => {
     event.preventDefault();                           // não recarrega a página
 
@@ -173,22 +174,35 @@ formulario.addEventListener("submit", event => {
         return;
     }
 
-    // monta a despesa nova
-    const novaDespesa = {
-        id: gerarProximoId(),
-        descricao,
-        valor,
-        data,
-        categoria,
-        status
-    };
+    if (idEmEdicao === null) {
+        // CADASTRO: cria uma despesa nova
+        const novaDespesa = {
+            id: gerarProximoId(),
+            descricao,
+            valor,
+            data,
+            categoria,
+            status
+        };
+        despesas.push(novaDespesa);
+        mensagemFormulario.textContent = "Despesa cadastrada com sucesso.";
+    } else {
+        // EDIÇÃO: acha a posição da despesa e troca os dados dela
+        const indice = despesas.findIndex(despesa => despesa.id === idEmEdicao);
+        despesas[indice] = {
+            ...despesas[indice],    // copia tudo da despesa antiga (inclusive o id)
+            descricao,              // e sobrescreve só os campos editados
+            valor,
+            data,
+            categoria,
+            status
+        };
+        mensagemFormulario.textContent = "Despesa atualizada com sucesso.";
+    }
 
-    despesas.push(novaDespesa);       // põe na lista
-    salvarDespesas();                 // grava no navegador
-    renderizar(despesas);             // desenha a tabela de novo
-
-    formulario.reset();               // limpa os campos
-    mensagemFormulario.textContent = "Despesa cadastrada com sucesso.";
+    salvarDespesas();               // grava no navegador
+    renderizar(despesas);           // desenha a tabela de novo
+    resetarFormulario();            // volta o formulário ao normal
 });
 
 // ===== AÇÕES DA TABELA (excluir, editar, detalhes) =====
@@ -261,4 +275,13 @@ function iniciarEdicao(id) {
     mensagemFormulario.textContent = "";
 
     campoDescricao.focus();               // leva o cursor pro primeiro campo
+}
+
+// sai do modo de edição e volta o formulário ao estado de cadastro
+function resetarFormulario() {
+    idEmEdicao = null;                          // não está mais editando
+    formulario.reset();                         // limpa os campos
+    tituloFormulario.textContent = "Cadastro de despesa";
+    botaoSalvar.textContent = "Cadastrar";
+    botaoCancelar.hidden = true;                // esconde o cancelar
 }
