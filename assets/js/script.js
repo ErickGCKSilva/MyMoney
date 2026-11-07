@@ -122,6 +122,13 @@ const campoCategoria = document.querySelector("#categoria");
 const campoStatus = document.querySelector("#status");
 const mensagemFormulario = document.querySelector("#mensagem-formulario");
 
+const tituloFormulario = document.querySelector("#titulo-formulario");
+const botaoSalvar = document.querySelector("#botao-salvar");
+const botaoCancelar = document.querySelector("#botao-cancelar");
+
+// guarda o id da despesa sendo editada; null = não está editando
+let idEmEdicao = null;
+
 // gera um id que não repete: o maior id existente + 1
 function gerarProximoId() {
     if (despesas.length === 0) {
@@ -203,6 +210,10 @@ corpoTabela.addEventListener("click", event => {
     if (acao === "excluir") {
         excluirDespesa(id);
     }
+
+    if (acao === "editar") {
+        iniciarEdicao(id);
+    }
 });
 
 // remove a despesa com esse id
@@ -225,4 +236,29 @@ function excluirDespesa(id) {
     despesas.splice(indice, 1);     // tira 1 item a partir dessa posição
     salvarDespesas();               // grava a lista sem ela
     renderizar(despesas);           // desenha a tabela de novo
+}
+
+// copia os dados da despesa pro formulário e entra no modo de edição
+function iniciarEdicao(id) {
+    const despesa = despesas.find(despesa => despesa.id === id);
+    if (!despesa) {                       // não achou: não faz nada
+        return;
+    }
+
+    // a despesa vai pros campos do formulário
+    campoDescricao.value = despesa.descricao;
+    campoValor.value = despesa.valor;
+    campoData.value = despesa.data;
+    campoCategoria.value = despesa.categoria;
+    campoStatus.value = despesa.status;
+
+    idEmEdicao = despesa.id;              // anota qual está sendo editada
+
+    // a tela avisa que é uma edição
+    tituloFormulario.textContent = "Editar despesa";
+    botaoSalvar.textContent = "Atualizar despesa";
+    botaoCancelar.hidden = false;         // mostra o botão de cancelar
+    mensagemFormulario.textContent = "";
+
+    campoDescricao.focus();               // leva o cursor pro primeiro campo
 }
