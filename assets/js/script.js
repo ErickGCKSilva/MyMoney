@@ -111,3 +111,75 @@ function renderizar(lista) {
 let despesas = carregarDespesas();
 salvarDespesas();          // grava já na abertura, pra a chave existir
 renderizar(despesas);
+// ===== CADASTRO =====
+
+// pega o formulário, os campos e o lugar da mensagem
+const formulario = document.querySelector("#form-despesa");
+const campoDescricao = document.querySelector("#descricao");
+const campoValor = document.querySelector("#valor");
+const campoData = document.querySelector("#data");
+const campoCategoria = document.querySelector("#categoria");
+const campoStatus = document.querySelector("#status");
+const mensagemFormulario = document.querySelector("#mensagem-formulario");
+
+// gera um id que não repete: o maior id existente + 1
+function gerarProximoId() {
+    if (despesas.length === 0) {
+        return 1;
+    }
+    const ids = despesas.map(despesa => despesa.id);   // só os números dos ids
+    return Math.max(...ids) + 1;                       // o maior, mais 1
+}
+
+// confere os dados; devolve o texto do erro, ou "" se estiver tudo certo
+function validarDespesa(descricao, valor, data) {
+    if (descricao === "") {
+        return "Informe a descrição.";
+    }
+    if (descricao.length < 3) {
+        return "A descrição precisa ter pelo menos 3 letras.";
+    }
+    if (Number.isNaN(valor) || valor <= 0) {          // não é número, ou é zero/negativo
+        return "O valor precisa ser maior que zero.";
+    }
+    if (data === "") {
+        return "Informe a data.";
+    }
+    return "";
+}
+
+// quando o formulário é enviado
+formulario.addEventListener("submit", event => {
+    event.preventDefault();                           // não recarrega a página
+
+    // lê o que a pessoa preencheu
+    const descricao = campoDescricao.value.trim();
+    const valor = Number(campoValor.value);           // texto do campo → número
+    const data = campoData.value;
+    const categoria = campoCategoria.value;
+    const status = campoStatus.value;
+
+    // valida: se tiver erro, mostra e para aqui (os dados ficam no formulário)
+    const erro = validarDespesa(descricao, valor, data);
+    if (erro !== "") {
+        mensagemFormulario.textContent = erro;
+        return;
+    }
+
+    // monta a despesa nova
+    const novaDespesa = {
+        id: gerarProximoId(),
+        descricao,
+        valor,
+        data,
+        categoria,
+        status
+    };
+
+    despesas.push(novaDespesa);       // põe na lista
+    salvarDespesas();                 // grava no navegador
+    renderizar(despesas);             // desenha a tabela de novo
+
+    formulario.reset();               // limpa os campos
+    mensagemFormulario.textContent = "Despesa cadastrada com sucesso.";
+});
