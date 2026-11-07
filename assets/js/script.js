@@ -201,7 +201,7 @@ formulario.addEventListener("submit", event => {
     }
 
     salvarDespesas();               // grava no navegador
-    renderizar(despesas);           // desenha a tabela de novo
+    atualizarVisualizacao();          // desenha a tabela de novo
     resetarFormulario();            // volta o formulário ao normal
 });
 
@@ -259,7 +259,7 @@ function excluirDespesa(id) {
     }
 
     salvarDespesas();               // grava a lista sem ela
-    renderizar(despesas);           // desenha a tabela de novo
+    atualizarVisualizacao();          // desenha a tabela de novo
 }
 
 // copia os dados da despesa pro formulário e entra no modo de edição
@@ -354,3 +354,23 @@ function somarValores(lista) {
     });
     return total;
 }
+
+// ===== PESQUISA, FILTRO E ORDENAÇÃO =====
+
+const campoPesquisa = document.querySelector("#pesquisa");
+
+// lê os controles, monta a lista resultante e desenha
+function atualizarVisualizacao() {
+    // o termo digitado, sem espaços nas pontas e em minúsculas
+    const termo = campoPesquisa.value.trim().toLowerCase();
+
+    // só as despesas cuja descrição contém o termo
+    const resultado = despesas.filter(despesa =>
+        despesa.descricao.toLowerCase().includes(termo)
+    );
+
+    renderizar(resultado);
+}
+
+// a cada letra digitada, atualiza a tabela
+campoPesquisa.addEventListener("input", atualizarVisualizacao);
