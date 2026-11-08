@@ -110,7 +110,7 @@ function renderizar(lista) {
 // estado inicial: o que está salvo no navegador, ou as de exemplo
 let despesas = carregarDespesas();
 salvarDespesas();          // grava já na abertura, pra a chave existir
-renderizar(despesas);
+
 // ===== CADASTRO =====
 
 // pega o formulário, os campos e o lugar da mensagem
@@ -359,6 +359,7 @@ function somarValores(lista) {
 
 const campoPesquisa = document.querySelector("#pesquisa");
 const filtroCategoria = document.querySelector("#filtro-categoria");
+const campoOrdenacao = document.querySelector("#ordenacao");
 
 // lê os controles, monta a lista resultante e desenha
 function atualizarVisualizacao() {
@@ -375,7 +376,22 @@ function atualizarVisualizacao() {
         return bateTermo && bateCategoria;
     });
 
-    renderizar(resultado);
+    // ordena uma CÓPIA do resultado, sem mexer na lista original
+    const ordem = campoOrdenacao.value;
+    const ordenado = [...resultado].sort((a, b) => {
+        if (ordem === "recentes") {
+            return b.data.localeCompare(a.data);     // data maior primeiro
+        }
+        if (ordem === "antigas") {
+            return a.data.localeCompare(b.data);     // data menor primeiro
+        }
+        if (ordem === "maior-valor") {
+            return b.valor - a.valor;                // valor maior primeiro
+        }
+        return a.valor - b.valor;                    // menor-valor
+    });
+
+    renderizar(ordenado);
 }
 
 // a cada letra digitada, atualiza a tabela
@@ -383,3 +399,9 @@ campoPesquisa.addEventListener("input", atualizarVisualizacao);
 
 // ao trocar a categoria, atualiza a tabela
 filtroCategoria.addEventListener("change", atualizarVisualizacao);
+
+// ao trocar a ordem, atualiza a tabela
+campoOrdenacao.addEventListener("change", atualizarVisualizacao);
+
+// desenha a tabela ao abrir a página, já com a ordem escolhida
+atualizarVisualizacao();
