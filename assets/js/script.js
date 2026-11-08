@@ -358,19 +358,28 @@ function somarValores(lista) {
 // ===== PESQUISA, FILTRO E ORDENAÇÃO =====
 
 const campoPesquisa = document.querySelector("#pesquisa");
+const filtroCategoria = document.querySelector("#filtro-categoria");
 
 // lê os controles, monta a lista resultante e desenha
 function atualizarVisualizacao() {
     // o termo digitado, sem espaços nas pontas e em minúsculas
     const termo = campoPesquisa.value.trim().toLowerCase();
 
-    // só as despesas cuja descrição contém o termo
-    const resultado = despesas.filter(despesa =>
-        despesa.descricao.toLowerCase().includes(termo)
-    );
+    // a categoria escolhida ("todas" = não filtra)
+    const categoria = filtroCategoria.value;
+
+    // a despesa entra no resultado se passar nas duas condições
+    const resultado = despesas.filter(despesa => {
+        const bateTermo = despesa.descricao.toLowerCase().includes(termo);
+        const bateCategoria = categoria === "todas" || despesa.categoria === categoria;
+        return bateTermo && bateCategoria;
+    });
 
     renderizar(resultado);
 }
 
 // a cada letra digitada, atualiza a tabela
 campoPesquisa.addEventListener("input", atualizarVisualizacao);
+
+// ao trocar a categoria, atualiza a tabela
+filtroCategoria.addEventListener("change", atualizarVisualizacao);
