@@ -121,7 +121,7 @@ const campoData = document.querySelector("#data");
 const campoCategoria = document.querySelector("#categoria");
 const campoStatus = document.querySelector("#status");
 const mensagemFormulario = document.querySelector("#mensagem-formulario");
-
+const campoMoeda = document.querySelector("#moeda");
 const tituloFormulario = document.querySelector("#titulo-formulario");
 const botaoSalvar = document.querySelector("#botao-salvar");
 const botaoCancelar = document.querySelector("#botao-cancelar");
@@ -155,9 +155,25 @@ function validarDespesa(descricao, valor, data) {
     return "";
 }
 
+// ===== API DE COTAÇÃO (AwesomeAPI) =====
+
+// pergunta pra API quanto vale 1 unidade da moeda em reais
+// async = função que pode ESPERAR algo da internet
+async function buscarCotacao(moeda) {
+    const url = `https://economia.awesomeapi.com.br/json/last/${moeda}-BRL`;
+
+    const resposta = await fetch(url);        // await = espera a resposta chegar
+
+    if (!resposta.ok) {                       // a API deu erro (fora do ar, etc.)
+        throw new Error("Falha ao buscar a cotação.");   // avisa quem chamou que deu erro
+    }
+
+    const dados = await resposta.json();      // texto JSON → objeto
+    return Number(dados[`${moeda}BRL`].bid);  // ex.: "5.43" → 5.43
+}
+
 // quando o formulário é enviado
-// quando o formulário é enviado
-formulario.addEventListener("submit", event => {
+formulario.addEventListener("submit", async event => {   // NOVO: async, porque vai esperar a API
     event.preventDefault();                           // não recarrega a página
 
     // lê o que a pessoa preencheu
@@ -166,6 +182,7 @@ formulario.addEventListener("submit", event => {
     const data = campoData.value;
     const categoria = campoCategoria.value;
     const status = campoStatus.value;
+    const moeda = campoMoeda.value;                   // NOVO
 
     // valida: se tiver erro, mostra e para aqui (os dados ficam no formulário)
     const erro = validarDespesa(descricao, valor, data);
@@ -174,12 +191,30 @@ formulario.addEventListener("submit", event => {
         return;
     }
 
+    // NOVO: se não for real, pergunta a cotação pra API
+    let cotacao = 1;                                  // real → real é 1 pra 1
+    if (moeda !== "BRL") {
+        mensagemFormulario.textContent = "Buscando cotação...";
+        try {
+            cotacao = await buscarCotacao(moeda);
+        } catch (erroApi) {                           // API falhou: avisa e não salva
+            mensagemFormulario.textContent = "Não foi possível buscar a cotação. Tente de novo.";
+            return;
+        }
+    }
+
+    // NOVO: converte pra reais, com 2 casas (centavos)
+    const valorEmReais = Math.round(valor * cotacao * 100) / 100;
+
     if (idEmEdicao === null) {
         // CADASTRO: cria uma despesa nova
         const novaDespesa = {
             id: gerarProximoId(),
             descricao,
-            valor,
+            valor: valorEmReais,       // NOVO: a tabela sempre usa reais
+            valorOriginal: valor,      // NOVO: o que a pessoa digitou
+            moeda,                     // NOVO
+            cotacao,                   // NOVO
             data,
             categoria,
             status
@@ -192,7 +227,10 @@ formulario.addEventListener("submit", event => {
         despesas[indice] = {
             ...despesas[indice],    // copia tudo da despesa antiga (inclusive o id)
             descricao,              // e sobrescreve só os campos editados
-            valor,
+            valor: valorEmReais,    // NOVO
+            valorOriginal: valor,   // NOVO
+            moeda,                  // NOVO
+            cotacao,                // NOVO
             data,
             categoria,
             status
@@ -201,7 +239,7 @@ formulario.addEventListener("submit", event => {
     }
 
     salvarDespesas();               // grava no navegador
-    atualizarVisualizacao();          // desenha a tabela de novo
+    atualizarVisualizacao();        // desenha a tabela de novo
     resetarFormulario();            // volta o formulário ao normal
 });
 
@@ -271,7 +309,9 @@ function iniciarEdicao(id) {
 
     // a despesa vai pros campos do formulário
     campoDescricao.value = despesa.descricao;
-    campoValor.value = despesa.valor;
+    // || = "se não tiver o primeiro, usa o segundo" (as despesas antigas não têm moeda)
+    campoValor.value = despesa.valorOriginal || despesa.valor;
+    campoMoeda.value = despesa.moeda || "BRL";
     campoData.value = despesa.data;
     campoCategoria.value = despesa.categoria;
     campoStatus.value = despesa.status;
@@ -332,6 +372,15 @@ function mostrarDetalhes(id) {
         ["Participação no total", `${participacao}% de todos os gastos`],
         [`Total em ${nomesCategorias[despesa.categoria]}`, formatoMoeda.format(totalCategoria)]
     ];
+
+    // se a despesa foi em outra moeda, mostra o valor original e a cotação da API
+    if (despesa.moeda && despesa.moeda !== "BRL") {
+        // formata no dinheiro da moeda original (ex.: US$ 10,00)
+        const formatoOriginal = new Intl.NumberFormat("pt-BR", { style: "currency", currency: despesa.moeda });
+
+        itens.push(["Valor original", formatoOriginal.format(despesa.valorOriginal)]);
+        itens.push(["Cotação usada", `1 ${despesa.moeda} = ${formatoMoeda.format(despesa.cotacao)}`]);
+    }
 
     // cria um <p> com o rótulo em negrito pra cada item
     itens.forEach(([rotulo, valor]) => {
