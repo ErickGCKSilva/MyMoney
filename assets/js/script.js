@@ -241,6 +241,7 @@ formulario.addEventListener("submit", async event => {   // NOVO: async, porque 
     salvarDespesas();               // grava no navegador
     atualizarVisualizacao();        // desenha a tabela de novo
     resetarFormulario();            // volta o formulário ao normal
+    limparDetalhes();               // detalhes antigos não valem mais
 });
 
 // ===== AÇÕES DA TABELA (excluir, editar, detalhes) =====
@@ -298,6 +299,7 @@ function excluirDespesa(id) {
 
     salvarDespesas();               // grava a lista sem ela
     atualizarVisualizacao();          // desenha a tabela de novo
+    limparDetalhes();               // detalhes antigos não valem mais
 }
 
 // copia os dados da despesa pro formulário e entra no modo de edição
@@ -393,6 +395,16 @@ function mostrarDetalhes(id) {
 
     // rola a página até a seção de detalhes
     document.querySelector("#detalhes").scrollIntoView({ behavior: "smooth" });
+}
+
+// volta a seção de detalhes pro aviso inicial
+// (usada depois de editar/excluir, pra não mostrar dados velhos)
+function limparDetalhes() {
+    const area = document.querySelector("#detalhes-despesa");
+    area.textContent = "";
+    const aviso = document.createElement("p");
+    aviso.textContent = 'Clique em "Ver detalhes" em uma despesa da lista.';
+    area.append(aviso);
 }
 
 // soma o valor de todas as despesas de uma lista
